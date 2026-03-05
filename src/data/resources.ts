@@ -2,8 +2,18 @@
 // ATLAS DE RECURSOS — ARGENTINA
 // Datos geográficos y cartográficos de recursos naturales
 // ============================================================
+import type {
+  ActiveLayerSet,
+  Basemap,
+  LayerCategory,
+  LayerDefinition,
+  PointLayer,
+  PolygonLayer,
+  CompanyLayer,
+  MixedLayer,
+} from '../types/resources';
 
-export const BASEMAPS = [
+export const BASEMAPS: readonly Basemap[] = [
   {
     id: 'dark',
     label: 'Oscuro',
@@ -30,7 +40,7 @@ export const BASEMAPS = [
   },
 ]
 
-export const LAYER_CATEGORIES = [
+export const LAYER_CATEGORIES: readonly LayerCategory[] = [
   { id: 'mineria', label: 'Minería', icon: '⛏️' },
   { id: 'hidrocarburos', label: 'Hidrocarburos', icon: '🛢️' },
   { id: 'empresas', label: 'Empresas', icon: '🏢' },
@@ -41,7 +51,7 @@ export const LAYER_CATEGORIES = [
 // ============================================================
 // LITIO
 // ============================================================
-export const LITIO = {
+export const LITIO: PointLayer = {
   id: 'litio',
   label: 'Litio',
   category: 'mineria',
@@ -216,7 +226,7 @@ export const LITIO = {
 // ============================================================
 // COBRE / ORO / PLATA
 // ============================================================
-export const COBRE_ORO = {
+export const COBRE_ORO: PointLayer = {
   id: 'cobre_oro',
   label: 'Cobre · Oro · Plata',
   category: 'mineria',
@@ -369,7 +379,7 @@ export const COBRE_ORO = {
 // ============================================================
 // OTROS MINERALES
 // ============================================================
-export const OTROS_MINERALES = {
+export const OTROS_MINERALES: PointLayer = {
   id: 'otros_minerales',
   label: 'Otros Minerales',
   category: 'mineria',
@@ -465,7 +475,7 @@ export const OTROS_MINERALES = {
 // ============================================================
 // CUENCAS HIDROCARBURÍFERAS
 // ============================================================
-export const CUENCAS_HC = {
+export const CUENCAS_HC: PolygonLayer = {
   id: 'cuencas_hc',
   label: 'Cuencas Hidrocarburíferas',
   category: 'hidrocarburos',
@@ -562,7 +572,7 @@ export const CUENCAS_HC = {
 // ============================================================
 // VACA MUERTA — Campos clave (enriquecido con geología e inversión)
 // ============================================================
-export const VACA_MUERTA = {
+export const VACA_MUERTA: PointLayer = {
   id: 'vaca_muerta',
   label: 'Campos Vaca Muerta',
   category: 'hidrocarburos',
@@ -807,7 +817,7 @@ export const VACA_MUERTA = {
 // ============================================================
 // PETRÓLEO CONVENCIONAL — Campos
 // ============================================================
-export const PETROLEO_CONV = {
+export const PETROLEO_CONV: PointLayer = {
   id: 'petroleo_conv',
   label: 'Petróleo/Gas Convencional',
   category: 'hidrocarburos',
@@ -895,7 +905,7 @@ export const PETROLEO_CONV = {
 // ============================================================
 // EMPRESAS PRINCIPALES — Perfiles operadores HC
 // ============================================================
-export const EMPRESAS_HC = {
+export const EMPRESAS_HC: CompanyLayer = {
   id: 'empresas_hc',
   label: 'Empresas Operadoras',
   category: 'empresas',
@@ -1001,7 +1011,7 @@ export const EMPRESAS_HC = {
 // ============================================================
 // INFRAESTRUCTURA HC — Gasoductos, oleoductos, terminales
 // ============================================================
-export const INFRA_HC = {
+export const INFRA_HC: MixedLayer = {
   id: 'infra_hc',
   label: 'Infraestructura HC',
   category: 'infraestructura',
@@ -1161,7 +1171,7 @@ export const INFRA_HC = {
 // ============================================================
 // ZONAS AGROPECUARIAS
 // ============================================================
-export const AGROPECUARIO = {
+export const AGROPECUARIO: PolygonLayer = {
   id: 'agropecuario',
   label: 'Zonas Agropecuarias',
   category: 'agropecuario',
@@ -1264,7 +1274,7 @@ export const AGROPECUARIO = {
 // ============================================================
 // EXPORTACIONES para el mapa
 // ============================================================
-export const ALL_LAYERS = [
+export const ALL_LAYERS: readonly LayerDefinition[] = [
   LITIO,
   COBRE_ORO,
   OTROS_MINERALES,
@@ -1276,7 +1286,7 @@ export const ALL_LAYERS = [
   AGROPECUARIO,
 ]
 
-export const DEFAULT_VISIBLE = new Set([
+export const DEFAULT_VISIBLE: ActiveLayerSet = new Set([
   'cuencas_hc',
   'vaca_muerta',
   'empresas_hc',
@@ -1284,8 +1294,9 @@ export const DEFAULT_VISIBLE = new Set([
 ])
 
 // Centrado en Argentina
-export const ARGENTINA_CENTER = [-40.0, -65.0]
-export const ARGENTINA_ZOOM = 4
+export const ARGENTINA_CENTER: [number, number] = [-40.0, -65.0];
+export const ARGENTINA_ZOOM = 4;
 
 // URL de provincias (GeoJSON oficial del gobierno argentino)
-export const PROVINCES_URL = 'https://apis.datos.gob.ar/georef/api/provincias?formato=geojson&campos=nombre,centroide&max=24'
+export const PROVINCES_URL =
+  'https://apis.datos.gob.ar/georef/api/provincias?formato=geojson&campos=nombre,centroide&max=24';
