@@ -23,7 +23,9 @@ import type {
   BasemapId,
   LayerFeature,
   LayerId,
+  LngLatTuple,
   MouseCoords,
+  PolygonCoords,
   ProvinceProperties,
   ProvincesGeoJson,
   StatusType,
@@ -162,6 +164,19 @@ async function fetchGeoJson(url: string, signal: AbortSignal): Promise<Provinces
   return (await response.json()) as ProvincesGeoJson;
 }
 
+function isMultiPolygonCoords(coords: PolygonCoords): coords is LngLatTuple[][] {
+  return Array.isArray(coords[0]?.[0]);
+}
+
+function polygonPositionsFromCoords(coords: PolygonCoords) {
+  if (!isMultiPolygonCoords(coords)) {
+    return coords.map(([lng, lat]) => [lat, lng] as const);
+  }
+
+  // Render disjoint polygon parts without connecting them with artificial edges.
+  return coords.map((part) => [part.map(([lng, lat]) => [lat, lng] as const)]);
+}
+
 export default function ArgentinaMap({ activeLayers, basemapId, onFeatureSelect }: ArgentinaMapProps) {
   const [provinces, setProvinces] = useState<ProvincesGeoJson | null>(null);
   const [coords, setCoords] = useState<MouseCoords>({ lat: '-40.0000', lng: '-65.0000' });
@@ -233,7 +248,7 @@ export default function ArgentinaMap({ activeLayers, basemapId, onFeatureSelect 
             return layer.features.map((feature) => (
               <Polygon
                 key={feature.id}
-                positions={feature.coords.map(([lng, lat]) => [lat, lng])}
+                positions={polygonPositionsFromCoords(feature.coords)}
                 pathOptions={{
                   color: feature.color ?? layer.color,
                   weight: 1.5,

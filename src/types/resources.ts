@@ -33,6 +33,7 @@ export type StatusType =
 export type MixedFeatureType = 'line' | 'point';
 
 export type LngLatTuple = [lng: number, lat: number];
+export type PolygonCoords = LngLatTuple[] | LngLatTuple[][];
 
 export interface FeatureAttributes {
   area?: string;
@@ -93,7 +94,7 @@ export interface PointFeature extends BaseFeature {
 }
 
 export interface PolygonFeature extends BaseFeature {
-  coords: LngLatTuple[];
+  coords: PolygonCoords;
 }
 
 export interface MixedLineFeature extends BaseFeature {
