@@ -1,0 +1,123 @@
+{
+  "AG-01": {
+    "include": [
+      {
+        "provincia": "Santa Fe",
+        "departamentos": ["Belgrano", "Caseros", "Castellanos", "Constitución", "General López", "Iriondo", "Las Colonias", "Rosario", "San Jerónimo", "San Lorenzo", "San Martín"]
+      },
+      {
+        "provincia": "Córdoba",
+        "departamentos": ["General San Martín", "Juárez Celman", "Marcos Juárez", "Río Segundo", "San Justo", "Tercero Arriba", "Unión"]
+      },
+      {
+        "provincia": "Buenos Aires",
+        "departamentos": ["Alberti", "Arrecifes", "Baradero", "Bragado", "Campana", "Capitán Sarmiento", "Carmen de Areco", "Chacabuco", "Chivilcoy", "Colón", "Exaltación de la Cruz", "General Arenales", "Junín", "Lincoln", "Pergamino", "Ramallo", "Rojas", "Salto", "San Andrés de Giles", "San Nicolás", "San Pedro", "Suipacha", "Zárate", "9 de Julio", "Mercedes"]
+      },
+      {
+        "provincia": "Entre Ríos",
+        "departamentos": ["Diamante", "Gualeguay", "Gualeguaychú", "Nogoyá", "Paraná", "Uruguay", "Victoria", "Villaguay"]
+      }
+    ]
+  },
+  "AG-02": {
+    "include": [
+      { "provincia": "La Pampa" },
+      { "provincia": "San Luis" },
+      {
+        "provincia": "Buenos Aires",
+        "departamentos": ["Adolfo Alsina", "Adolfo Gonzales Chaves", "Bahía Blanca", "Benito Juárez", "Bolívar", "Carlos Tejedor", "Coronel Dorrego", "Coronel Pringles", "Coronel Suárez", "Daireaux", "Florentino Ameghino", "General La Madrid", "General Villegas", "Guaminí", "Hipólito Yrigoyen", "Laprida", "Olavarría", "Patagones", "Pehuajó", "Pellegrini", "Puán", "Rivadavia", "Saavedra", "Salliqueló", "Tornquist", "Trenque Lauquen", "Tres Arroyos", "Tres Lomas", "Villarino"]
+      },
+      {
+        "provincia": "Córdoba",
+        "departamentos": ["Cruz del Eje", "General Roca", "Ischilín", "Minas", "Pocho", "Presidente Roque Sáenz Peña", "Río Cuarto", "Río Seco", "Sobremonte", "Tulumba"]
+      }
+    ]
+  },
+  "AG-03": {
+    "include": [
+      { "provincia": "Tucumán" },
+      {
+        "provincia": "Salta",
+        "departamentos": ["Anta", "Cafayate", "Capital", "Cerrillos", "Chicoana", "General Güemes", "General José de San Martín", "La Candelaria", "La Viña", "Metán", "Orán", "Rivadavia", "Rosario de la Frontera", "San Carlos"]
+      },
+      {
+        "provincia": "Jujuy",
+        "departamentos": ["Dr. Manuel Belgrano", "El Carmen", "Ledesma", "Palpalá", "San Antonio", "San Pedro", "Santa Bárbara", "Valle Grande"]
+      },
+      { "provincia": "Santiago del Estero" },
+      {
+        "provincia": "Catamarca",
+        "departamentos": ["Ambato", "Ancasti", "Capayán", "Capital", "El Alto", "Fray Mamerto Esquiú", "La Paz", "Paclín", "Pomán", "Santa Rosa", "Tinogasta", "Valle Viejo"]
+      }
+    ]
+  },
+  "AG-04": {
+    "include": [
+      { "provincia": "Chaco" },
+      { "provincia": "Formosa" },
+      { "provincia": "Corrientes" },
+      { "provincia": "Misiones" }
+    ]
+  },
+  "AG-05": {
+    "include": [
+      {
+        "provincia": "Córdoba",
+        "departamentos": ["Colón", "General San Martín", "Juárez Celman", "Marcos Juárez", "Presidente Roque Sáenz Peña", "Río Cuarto", "Río Segundo", "San Justo", "Santa María", "Tercero Arriba", "Unión"]
+      },
+      {
+        "provincia": "San Luis",
+        "departamentos": ["Chacabuco", "General Pedernera", "Juan Martín de Pueyrredón"]
+      },
+      {
+        "provincia": "Santa Fe",
+        "departamentos": ["Belgrano", "Castellanos", "Las Colonias", "San Cristóbal", "San Martín"]
+      }
+    ]
+  },
+  "AG-06": {
+    "include": [
+      {
+        "provincia": "Mendoza",
+        "departamentos": ["Capital", "General Alvear", "Godoy Cruz", "Guaymallén", "Junín", "La Paz", "Las Heras", "Lavalle", "Luján de Cuyo", "Maipú", "Rivadavia", "San Carlos", "San Martín", "San Rafael", "Santa Rosa", "Tunuyán", "Tupungato"]
+      },
+      {
+        "provincia": "San Juan",
+        "departamentos": ["25 de Mayo", "9 de Julio", "Albardón", "Angaco", "Capital", "Caucete", "Chimbas", "Pocito", "Rawson", "Rivadavia", "San Martín", "Santa Lucía", "Sarmiento", "Ullum", "Zonda"]
+      },
+      {
+        "provincia": "La Rioja",
+        "departamentos": ["Arauco", "Capital", "Castro Barros", "Chilecito", "Famatina", "San Blas de Los Sauces"]
+      }
+    ]
+  },
+  "AG-07": {
+    "include": [
+      {
+        "provincia": "Río Negro",
+        "departamentos": ["Adolfo Alsina", "Avellaneda", "Conesa", "General Roca", "Pichi Mahuida"]
+      },
+      {
+        "provincia": "Neuquén",
+        "departamentos": ["Añelo", "Confluencia", "Lácar", "Los Lagos", "Picún Leufú"]
+      },
+      {
+        "provincia": "Chubut",
+        "departamentos": ["Biedma", "Florentino Ameghino", "Futaleufú", "Gaiman", "Rawson"]
+      }
+    ]
+  },
+  "AG-08": {
+    "include": [
+      {
+        "provincia": "Chubut",
+        "departamentos": ["Escalante", "Languiñeo", "Paso de Indios", "Río Senguer", "Sarmiento", "Tehuelches"]
+      },
+      { "provincia": "Santa Cruz" },
+      {
+        "provincia": "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+        "departamentos": ["Río Grande", "Tolhuin", "Ushuaia"]
+      }
+    ]
+  }
+}

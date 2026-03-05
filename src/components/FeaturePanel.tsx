@@ -12,6 +12,15 @@ interface FeaturePanelProps {
   onClose: () => void;
 }
 
+interface AgroInsight {
+  opportunityScore: number;
+  riskScore: number;
+  executionScore: number;
+  profile: string;
+  hiddenSignal: string;
+  nextCatalyst: string;
+}
+
 const LAYER_META = new Map(ALL_LAYERS.map((layer) => [layer.id, layer] as const));
 
 const STATUS_CLASS: Record<StatusType, string> = {
@@ -45,9 +54,91 @@ function Row({ label, value }: RowProps) {
   );
 }
 
+function clampScore(value: number) {
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+function firstActionStep(actionSteps?: string) {
+  if (!actionSteps) {
+    return 'Validar supuestos productivos y comerciales con due diligence de campo.';
+  }
+
+  const steps = actionSteps.split(/\s*\d\)\s*/).map((step) => step.trim()).filter(Boolean);
+  return steps[0] ?? actionSteps;
+}
+
+function buildAgroInsight(feature: LayerFeature, layerId: LayerId): AgroInsight | null {
+  if (layerId !== 'agropecuario') {
+    return null;
+  }
+
+  const opportunityContext = [
+    feature.valueChain,
+    feature.logistics,
+    feature.demandDriver,
+    feature.investmentThesis,
+    feature.pricing,
+  ]
+    .join(' ')
+    .toLowerCase();
+  const riskContext = (feature.riskFlags ?? '').toLowerCase();
+  const actions = feature.actionSteps ?? '';
+
+  let opportunity = 50;
+  if (/export|fob|paridad|china|asia|ue|ee\.uu|mercosur/.test(opportunityContext)) opportunity += 14;
+  if (/hidrov[ií]a|puerto|fr[ií]o|ferrocarril|up-river/.test(opportunityContext)) opportunity += 10;
+  if (/industrial|crushing|bioetanol|bodega|empaque|trazabilidad/.test(opportunityContext)) {
+    opportunity += 12;
+  }
+  if (/premium|nicho|dolariz|origen/.test(opportunityContext)) opportunity += 8;
+
+  let risk = 34;
+  if (/agua|h[ií]dr|sequ[ií]a|helada|granizo|clim/.test(riskContext)) risk += 17;
+  if (/retenciones|fiscal|macro|tipo de cambio|regulator/.test(riskContext)) risk += 12;
+  if (/log[ií]st|infraestructura|flete/.test(riskContext)) risk += 8;
+
+  let execution = 48;
+  if (/1\).*2\).*3\)/.test(actions)) execution += 16;
+  if (/joint venture|minority stake|adquisici[oó]n|integrar/.test((feature.entryStrategy ?? '').toLowerCase())) {
+    execution += 12;
+  }
+  if (/contrato|hedge|cobertura|trazabilidad/.test(actions.toLowerCase())) execution += 10;
+
+  opportunity = clampScore(opportunity - Math.max(0, (risk - 40) * 0.2));
+  risk = clampScore(risk);
+  execution = clampScore(execution);
+
+  const profile =
+    opportunity >= 72 && risk <= 48
+      ? 'Core compuesto'
+      : opportunity >= 65 && execution >= 60
+        ? 'Growth ejecutable'
+        : opportunity >= 55
+          ? 'Value operativa'
+          : 'Táctica / selectiva';
+
+  const hiddenSignal = /hidrov[ií]a|up-river/.test(opportunityContext)
+    ? 'La ventaja no es solo rinde: el arbitraje logístico mejora margen incluso con precios laterales.'
+    : /fr[ií]o|empaque|calibre/.test(opportunityContext)
+      ? 'El cuello de botella está en postcosecha; quien controla frío/empaque captura prima comercial.'
+      : /bioetanol|industrial/.test(opportunityContext)
+        ? 'La integración industrial reduce dependencia del precio spot del grano.'
+        : 'La captura de valor depende más de ejecución comercial que de expansión de hectáreas.';
+
+  return {
+    opportunityScore: opportunity,
+    riskScore: risk,
+    executionScore: execution,
+    profile,
+    hiddenSignal,
+    nextCatalyst: firstActionStep(feature.actionSteps),
+  };
+}
+
 export default function FeaturePanel({ feature, layerId, onClose }: FeaturePanelProps) {
   const layer = LAYER_META.get(layerId);
   const isPolygon = layer?.type === 'polygon';
+  const agroInsight = buildAgroInsight(feature, layerId);
 
   const statusClass = feature.statusType ? STATUS_CLASS[feature.statusType] : 'status-exploration';
   const statusLabel =
@@ -77,6 +168,33 @@ export default function FeaturePanel({ feature, layerId, onClose }: FeaturePanel
         {feature.statusType && statusLabel && (
           <div style={{ marginBottom: 12 }}>
             <span className={`status-badge ${statusClass}`}>{statusLabel}</span>
+          </div>
+        )}
+
+        {agroInsight && (
+          <div className="agro-insight-card">
+            <div className="agro-insight-header">Radar Inversor</div>
+            <div className="agro-insight-grid">
+              <div className="agro-insight-metric">
+                <span>Oportunidad</span>
+                <strong>{agroInsight.opportunityScore}/100</strong>
+              </div>
+              <div className="agro-insight-metric">
+                <span>Riesgo</span>
+                <strong>{agroInsight.riskScore}/100</strong>
+              </div>
+              <div className="agro-insight-metric">
+                <span>Ejecución</span>
+                <strong>{agroInsight.executionScore}/100</strong>
+              </div>
+            </div>
+            <div className="agro-insight-profile">{agroInsight.profile}</div>
+            <div className="agro-insight-text">
+              <strong>Señal no obvia:</strong> {agroInsight.hiddenSignal}
+            </div>
+            <div className="agro-insight-text">
+              <strong>Catalizador inmediato:</strong> {agroInsight.nextCatalyst}
+            </div>
           </div>
         )}
 
@@ -114,6 +232,15 @@ export default function FeaturePanel({ feature, layerId, onClose }: FeaturePanel
         <Row label="Cultivos" value={feature.crops} />
         <Row label="Ganadería" value={feature.livestock} />
         <Row label="Precipitación" value={feature.rainfall} />
+        <Row label="Actores clave" value={feature.keyActors} />
+        <Row label="Cadena de valor" value={feature.valueChain} />
+        <Row label="Logística crítica" value={feature.logistics} />
+        <Row label="Pricing / benchmark" value={feature.pricing} />
+        <Row label="Driver demanda" value={feature.demandDriver} />
+        <Row label="Tesis inversora" value={feature.investmentThesis} />
+        <Row label="Estrategia entrada" value={feature.entryStrategy} />
+        <Row label="Riesgos clave" value={feature.riskFlags} />
+        <Row label="Pasos accionables" value={feature.actionSteps} />
         <Row label="% Petróleo nac." value={feature.oilShare} />
         <Row label="% Gas nac." value={feature.gasShare} />
 

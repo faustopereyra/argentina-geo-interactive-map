@@ -101,7 +101,7 @@ export default function Sidebar({ activeLayers, onToggleLayer, isOpen, onClose }
           >
             Fuentes
           </div>
-          SEGEMAR · IAPG · Secretaría de Minería · IGN Argentina · datos.gob.ar
+          SEGEMAR · IAPG · SAGyP · INDEC · SENASA · BCBA · BCR · IGN · datos.gob.ar
         </div>
       </div>
     </aside>

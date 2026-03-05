@@ -36,25 +36,31 @@ export type LngLatTuple = [lng: number, lat: number];
 export type PolygonCoords = LngLatTuple[] | LngLatTuple[][];
 
 export interface FeatureAttributes {
+  actionSteps?: string;
   area?: string;
   capex?: string;
   capacity?: string;
   color?: string;
   commodity?: string;
   crops?: string;
+  demandDriver?: string;
   department?: string;
   depth?: string;
   diameter?: string;
   elevation?: string;
+  entryStrategy?: string;
   featureType?: MixedFeatureType;
   fillOpacity?: number;
   formation?: string;
   from_to?: string;
   gasShare?: string;
   investment?: string;
+  investmentThesis?: string;
+  keyActors?: string;
   key_assets?: string;
   length?: string;
   livestock?: string;
+  logistics?: string;
   marketCap?: string;
   notes?: string;
   oilShare?: string;
@@ -66,8 +72,10 @@ export interface FeatureAttributes {
   production_total?: string;
   province?: string;
   provinces?: string;
+  pricing?: string;
   rainfall?: string;
   reserves?: string;
+  riskFlags?: string;
   resources?: string;
   revenue?: string;
   salar?: string;
@@ -80,6 +88,7 @@ export interface FeatureAttributes {
   ticker?: string;
   type?: string;
   type_curve?: string;
+  valueChain?: string;
   well_cost?: string;
 }
 
