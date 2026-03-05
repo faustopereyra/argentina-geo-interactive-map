@@ -9,6 +9,8 @@ interface LayerToggleProps {
 interface SidebarProps {
   activeLayers: ActiveLayerSet;
   onToggleLayer: (layerId: LayerId) => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 function LayerToggle({ checked, onChange }: LayerToggleProps) {
@@ -22,14 +24,26 @@ function LayerToggle({ checked, onChange }: LayerToggleProps) {
   );
 }
 
-export default function Sidebar({ activeLayers, onToggleLayer }: SidebarProps) {
+export default function Sidebar({ activeLayers, onToggleLayer, isOpen, onClose }: SidebarProps) {
   const byCategory = LAYER_CATEGORIES.map((category) => ({
     ...category,
     layers: ALL_LAYERS.filter((layer) => layer.category === category.id),
   }));
 
   return (
-    <aside className="sidebar">
+    <aside id="layers-sidebar" className={`sidebar ${isOpen ? 'open' : ''}`}>
+      <div className="sidebar-mobile-header">
+        <span>Capas</span>
+        <button
+          type="button"
+          className="sidebar-mobile-close"
+          onClick={onClose}
+          aria-label="Cerrar panel de capas"
+        >
+          ×
+        </button>
+      </div>
+
       {byCategory.map((category) => (
         <div key={category.id} className="sidebar-section">
           <div className="sidebar-category">

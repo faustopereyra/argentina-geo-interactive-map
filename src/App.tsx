@@ -19,6 +19,7 @@ export default function App() {
   const [selectedFeature, setSelectedFeature] = useState<LayerFeature | null>(null);
   const [selectedLayerId, setSelectedLayerId] = useState<LayerId | null>(null);
   const [basemapId, setBasemapId] = useState<BasemapId>('dark');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const layerById = useMemo(() => new Map(ALL_LAYERS.map((layer) => [layer.id, layer])), []);
 
@@ -37,9 +38,18 @@ export default function App() {
     });
   }, []);
 
+  const handleToggleLayerFromSidebar = useCallback(
+    (layerId: LayerId) => {
+      handleToggleLayer(layerId);
+      setIsSidebarOpen(false);
+    },
+    [handleToggleLayer],
+  );
+
   const handleFeatureSelect = useCallback((feature: LayerFeature, layerId: LayerId) => {
     setSelectedFeature(feature);
     setSelectedLayerId(layerId);
+    setIsSidebarOpen(false);
   }, []);
 
   const handleClosePanel = useCallback(() => {
@@ -50,6 +60,15 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar">
+        <button
+          className="sidebar-toggle-btn"
+          onClick={() => setIsSidebarOpen((prev) => !prev)}
+          aria-label="Mostrar u ocultar panel de capas"
+          aria-expanded={isSidebarOpen}
+          aria-controls="layers-sidebar"
+        >
+          ☰
+        </button>
         <span className="topbar-logo">🗺</span>
         <span className="topbar-title">Atlas de Recursos</span>
         <span className="topbar-subtitle">— Argentina</span>
@@ -84,7 +103,19 @@ export default function App() {
         </div>
       </header>
 
-      <Sidebar activeLayers={activeLayers} onToggleLayer={handleToggleLayer} />
+      <button
+        className={`sidebar-backdrop ${isSidebarOpen ? 'open' : ''}`}
+        onClick={() => setIsSidebarOpen(false)}
+        aria-label="Cerrar panel de capas"
+        tabIndex={isSidebarOpen ? 0 : -1}
+      />
+
+      <Sidebar
+        activeLayers={activeLayers}
+        onToggleLayer={handleToggleLayerFromSidebar}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
 
       <div className="map-container">
         <ArgentinaMap
@@ -101,7 +132,7 @@ export default function App() {
           />
         )}
 
-        <div className="legend">
+        <div className={`legend ${selectedFeature ? 'legend-has-panel' : ''}`}>
           <div className="legend-title">Estado</div>
           {LEGEND_STATUSES.map(({ cls, label }) => (
             <div key={cls} className="legend-item">

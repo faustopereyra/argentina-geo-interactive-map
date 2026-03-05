@@ -170,11 +170,11 @@ function isMultiPolygonCoords(coords: PolygonCoords): coords is LngLatTuple[][] 
 
 function polygonPositionsFromCoords(coords: PolygonCoords) {
   if (!isMultiPolygonCoords(coords)) {
-    return coords.map(([lng, lat]) => [lat, lng] as const);
+    return coords.map(([lng, lat]) => [lat, lng] as [number, number]);
   }
 
   // Render disjoint polygon parts without connecting them with artificial edges.
-  return coords.map((part) => [part.map(([lng, lat]) => [lat, lng] as const)]);
+  return coords.map((part) => [part.map(([lng, lat]) => [lat, lng] as [number, number])]);
 }
 
 export default function ArgentinaMap({ activeLayers, basemapId, onFeatureSelect }: ArgentinaMapProps) {
