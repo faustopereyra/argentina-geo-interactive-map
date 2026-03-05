@@ -113,6 +113,11 @@ function getProvinceName(feature?: Feature): string {
   return (properties.nombre ?? properties.name ?? '') as string;
 }
 
+function isProvincePolygon(feature: Feature | undefined): boolean {
+  const geometryType = feature?.geometry?.type;
+  return geometryType === 'Polygon' || geometryType === 'MultiPolygon';
+}
+
 function onEachProvince(feature: Feature | undefined, leafletLayer: LeafletLayer) {
   if (!isStyleableLayer(leafletLayer)) {
     return;
@@ -235,6 +240,7 @@ export default function ArgentinaMap({ activeLayers, basemapId, onFeatureSelect 
             key="provinces"
             data={provinces as GeoJsonObject}
             style={styleProvince}
+            filter={isProvincePolygon}
             onEachFeature={onEachProvince}
           />
         )}
