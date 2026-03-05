@@ -63,6 +63,9 @@ auxiliary/
     README.md                 # Pipeline de geometrías agropecuarias
     build-agro-coords.js      # Script de generación de coordenadas
     zone_selection_reference.json # Selección de departamentos por macrozona
+  hc-basins/
+    README.md                 # Deep research + metodología de cuencas HC
+    build-hc-basin-coords.js  # Script de generación de coordenadas oficiales WFS
 ```
 
 ## Arquitectura funcional (deep dive)
@@ -158,11 +161,12 @@ El proyecto agrega datos de distintas fuentes públicas y sectoriales. En la UI 
 - BCR
 - IGN
 - datos.gob.ar
+- Secretaría de Energía (WFS SIG)
 
 Importante:
 
 - Este repositorio no pretende reemplazar cartografía oficial.
-- Los polígonos temáticos pueden estar simplificados para visualización.
+- La capa `CUENCAS_HC` está trazada con geometría oficial WFS de Secretaría de Energía.
 - Es recomendable validar contra fuentes oficiales antes de usos críticos.
 
 ## Pipeline de macrozonas agropecuarias
@@ -179,6 +183,20 @@ Resumen:
 Ver detalles en:
 
 - `auxiliary/agro-zones/README.md`
+
+## Pipeline de cuencas hidrocarburíferas
+
+En `auxiliary/hc-basins/` hay un proceso reproducible para regenerar coordenadas de `HC-01..HC-05` desde la capa oficial WFS de Secretaría de Energía.
+
+Resumen:
+
+1. Descargar `ms:ypf_cuencas_sedimentarias_productivas` en GeoJSON.
+2. Ejecutar `build-hc-basin-coords.js`.
+3. Inyectar el resultado en `src/data/resources.ts`.
+
+Ver detalles en:
+
+- `auxiliary/hc-basins/README.md`
 
 ## Cómo contribuir
 
